@@ -54,7 +54,7 @@ if __name__ == "__main__":
         print("   read SBDE data")
         st = None
         X_sdbe = None
-        N_sdbe_frames = 512
+        N_sdbe_frames = 4096
         for ii in [0,1,2,3]:#range(4):
             sdbe_filename = "/".join(["dat",get_flatfile_filename(misc_exp,sdbe_name,scan_name,ii)])
             #~ _X_sdbe,tmp_sdbe = swarm.read_spectra_from_file_cf_no_b(sdbe_filename,N_sdbe_frames)
@@ -97,5 +97,8 @@ if __name__ == "__main__":
         plt.title("{0}".format(sdbe_name))
 
         sbplt += 1
-
+    plt.figure(fh_histo.number)
+    plt.savefig(args.config.split('.conf')[0].split('rtc_')[-1]+'hist.png',dpi=150)
+    plt.figure(fh_autos.number)
+    plt.savefig(args.config.split('.conf')[0].split('rtc_')[-1]+'auto.png',dpi=150)
     plt.show()

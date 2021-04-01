@@ -159,6 +159,7 @@ def _corr_iter(rcp, misc_exp, corr_sets, scan_name, icorr, cs):
         real_time_r2dbe = v_r2dbe.secs_since_epoch + v_r2dbe.data_frame/125000.0
         real_time_sdbe = rt.sec + rt.clk/286e6 + (32768*(solution_sdbe_window_lag)-solution_sdbe_sample_lead)/4576e6
         print("Relative lag: {0}".format(real_time_sdbe - real_time_r2dbe))
+        plt.savefig(sdbe_name+'corr_%s_.png' % args.config.split('/')[-1])
         plt.show()
 
 if __name__ == "__main__":
@@ -182,6 +183,7 @@ if __name__ == "__main__":
     procs = []
     for icorr,cs in enumerate(corr_sets):
         procs.append(Process(target=_corr_iter, args=(rcp, misc_exp, corr_sets, scan_name, icorr, cs)))
+       # _corr_iter(rcp, misc_exp, corr_sets, scan_name, icorr, cs)
     [p.start() for p in procs]
     # write solution to scan-specific configuration file
     out_cfg_filename = "conf/rtc_{0}_{1}.conf".format(misc_exp,scan_name)
