@@ -28,7 +28,7 @@ RTF_BACKUP_COUNT=5
 
 def ref_epoch():
 	utcnow = datetime.utcnow()
-	utcref = datetime(utcnow.year,1+6*int(utcnow.month/6),1,0,0,0)
+	utcref = datetime(utcnow.year,1+6*int((utcnow.month-1)/6),1,0,0,0)
 	return utcref
 
 def seconds_since_ref_epoch(date=None):
