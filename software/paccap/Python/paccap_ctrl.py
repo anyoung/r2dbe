@@ -102,6 +102,15 @@ class LoggingThread(Thread):
 		# set logger
 		self.logger = parent_logger.getChild("{name}".format(name=self.__class__.__name__))
 
+	def run(self):
+		try:
+			self.run_in_try_and_log()
+		except Exception as e:
+			self.logger.exception(e)
+
+	def run_in_try_and_log(self):
+		pass
+
 class StoppableThread(LoggingThread):
 
 	def __init__(self,*args,**kwargs):
@@ -138,7 +147,7 @@ class ReceiverThread(StoppableThread):
 		# set the queue for putting messages
 		self.queue = pqueue
 
-	def run(self):
+	def run_in_try_and_log(self):
 
 		# initialize message buffer
 		msg = ""
@@ -310,7 +319,7 @@ class ProcessorThread(StoppableThread):
 			self.logger.error("No definition for '{act}'".format(act=action))
 		fun(*params)
 
-	def run(self):
+	def run_in_try_and_log(self):
 
 		self.logger.info("Started")
 
